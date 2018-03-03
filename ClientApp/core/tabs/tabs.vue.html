@@ -1,0 +1,35 @@
+<template>
+
+	<div>
+
+        <div class="container tabs" id="exTab3">
+            <ul class="nav nav-pills" id="myTab" >
+                <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }" >
+                    <a :href="tab.href" @click="selectTab(tab.href)">{{ tab.name }}</a>
+                </li>
+            </ul>
+
+            <div class="tab-content clearfix">
+                <slot></slot>
+            </div>
+        </div>
+
+	</div>
+</template>
+<style>
+    .is-active {
+        background: #e5e5e5;
+    }
+    
+    .tabs .nav>li>a {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+    
+    #exTab3 {
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+
+<script src="./tabs.ts"></script>

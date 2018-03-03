@@ -1,0 +1,43 @@
+.stats-well {
+    border: 1px solid lightslategray;
+    color: rgb(239, 245, 250);
+    font-size: 45px;
+    vertical-align: middle;
+    text-align: center;	
+    font-family: 'operator mono';
+}
+
+.build-success {
+    background: rgb(53, 165, 53);
+}
+
+.build-aborted {
+    background: rgb(240, 198, 82);
+}
+
+.build-failed {
+    background: rgb(230, 76, 4);
+}
+
+.well-center {								
+    font-weight: 600;
+}
+
+
+h3.boldered {
+
+    font-family: 'Arvo', serif;
+    font-size: 45px;				
+    line-height: 1.1px;
+    vertical-align: text-bottom;
+    overflow: hidden;				
+}
+
+h3.boldered-small {
+
+    font-family: 'Arvo', serif;
+    font-size: 20px;				
+    line-height: 1.1px;
+    vertical-align: text-bottom;
+    overflow: hidden;				
+}

@@ -1,0 +1,18 @@
+<style src="./spotify.css"></style>
+<template>
+
+        <div class="tile team-music">
+                <center>
+                    Playing Now
+                    <!-- {{ spotifyUser }} -->
+                    <!-- {{ player }} -->
+                    <!-- {{ currentlyPlaying }} -->
+                    <div class="album-art">
+                        <img :src="currentlyPlaying.item.album.images[1].url" width="150" height="150"/>
+                    </div>
+                    <a :href="authURL" class="btn btn-success btn-link btn-xs">Authorize <i class="fa fa-spotify"></i></i></a>
+                </center>
+        </div>
+</template>
+
+<script src="./spotify.ts"></script>

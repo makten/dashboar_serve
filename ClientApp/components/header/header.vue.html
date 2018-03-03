@@ -1,0 +1,225 @@
+<template>
+  <div class="header navbar navbar-default fixed-top" :style="{background: themeColor.color}" >
+
+    <div class="container-fluid" >
+      <!-- <div class="navbar-header"> -->
+        <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> -->
+        <!-- <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> -->
+      <!-- </button> -->
+        <!-- <a class="navbar-brand" href="javascript:void(0)">Hafiz Abass</a> -->
+      <!-- </div> -->
+
+
+
+      <div class="theme-icon-wrapper">
+
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown">
+
+            <a data-toggle="dropdown" href="#">            
+              <img src="../../../wwwroot/img/icons/rainbow-icon.png" class="theme-selector-icon"/>              
+            </a>
+
+            <ul class="dropdown-menu" >
+              <div class="panel">
+                <div class="panel-body">
+                  <ul v-for="theme in themes" class="themes-ul"> 
+
+                    <li @click="setTheme(theme)">
+                      <span>
+                        <i :style="{ color: theme.color }" class="fa fa-circle" aria-hidden="true"></i> {{ theme.name }}
+                      </span>
+                    </li>                               
+                  
+                  </ul>               
+                </div>                 
+              </div>
+            </ul>              
+
+          </li>
+        </ul>
+
+      </div>
+
+
+      <div class="drop navbar-collapse navbar-right navbar-responsive-collapse" style="position: absolute; right: 0px; top: 0px;">
+
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown">
+
+            <a v-if="!authenticated" class="login-btn" href="#" @click="auth.login()" style="margin-top: 1px !important; font-weight: bolder;" :style="{color: themeColor.text}">
+              <i class="material-icons">exit_to_app</i> Login
+            </a>
+
+            <a :style="{color: themeColor.text}" v-if="authenticated" class="dropdown-toggle" data-toggle="dropdown"> 
+              <img :src="userProfile.picture" class="user-image-small"> 
+              <span class="hidden-xs"> {{ userProfile.name }} <b class="caret"></b></span>
+            </a>
+
+            <ul class="dropdown-menu dropwrapper">
+              <div class="panel">
+                <div class="panel-body">
+                  <ul>
+                  
+                  <li>
+                    <img :src="userProfile.picture" class="user-image">
+                    <p>  {{ userProfile.name }} </p>
+                  </li>                     
+                  
+                  <li><a href="#">Placeholder 1</a></li>
+                  <li><a href="#">Placeholder 2</a></li>
+                  
+                  <li class="divider"></li>
+
+                  <li class="visible-xs">
+
+                    <ul class="dropdown">
+                      <li>
+                        <router-link to="/vehicle/new" :exact="true" class="btn btn-link">
+                          <span><i class="material-icons">note_add</i></span> New
+                        </router-link>
+
+                        <router-link to="/fetchdata" :exact="true" class="btn btn-link">
+                          <span><i class="material-icons">list</i></span> Vehicles
+                        </router-link>
+                      </li>
+                    </ul>
+
+                  </li>
+                  
+                  </ul>               
+                </div>  
+                
+                <a @click.prevent="auth.logout()" href="#" class="btn btn-xs btn-block btn-primary" > 
+                  <span>
+                      <i class="fa fa-fw fa-power-off"></i>
+                  </span> 
+                  Logout
+                </a>               
+                 
+              </div>
+            </ul>              
+
+          </li>
+        </ul>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</template>
+
+<style>
+    @media screen and (min-width: 600px) {
+        .theme-icon-wrapper {
+            position: absolute;
+            right: 182px;
+        }
+    }
+    
+    .theme-selector-icon {
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        border: 1px solid #c7c7c7;
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    
+    .themes-ul {
+        padding: 0px !important;
+        margin-left: 0px !important;
+    }
+    
+    .themes-ul li:hover {
+        cursor: pointer;
+    }
+    
+    .test-inline ul li {
+        float: left;
+        text-align: center;
+        width: 33.3%;
+        height: 100px;
+        display: block;
+        padding: 20px 15px 15px;
+        height: 100px;
+        position: relative;
+        border: 1px solid #ddd;
+    }
+    
+    .test-inline li {
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+    }
+    
+    .dropdown-toggle {
+        margin-bottom: -5px;
+        padding-bottom: 0px;
+        margin-top: -10px;
+        margin-right: 10px;
+        padding-top: 10px;
+    }
+    
+    .login-btn {
+        margin-bottom: 10px;
+        margin-top: -10px !important;
+        padding-top: 10px;
+    }
+    
+    .drop ul,
+    .drop li {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .dropwrapper .separate {
+        padding: 2px;
+    }
+    
+    .dropwrapper .separate a {
+        text-decoration: none;
+    }
+    
+    .dropwrapper {
+        width: 220px;
+        padding: 5px;
+        text-align: center;
+        align-content: center;
+        padding-top: 10px;
+        z-index: 3;
+        margin-top: -7px !important;
+    }
+    
+    .login-btn {
+        margin: 8px;
+    }
+    
+    .user-image {
+        border: 1px solid lightgrey;
+        padding: 5px;
+        margin-right: 7px;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background: #E9E8E8;
+    }
+    
+    .user-image-small {
+        border: 1px solid #bfbfbf;
+        height: 25px;
+        width: 25px;
+        margin: 8px;
+        border-radius: 50%;
+        background: #E9E8E8;
+    }
+</style>
+
+<script src="./header.ts"></script>

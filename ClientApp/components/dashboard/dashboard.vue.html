@@ -1,0 +1,131 @@
+<style src="./dashboard.css"></style>
+
+<template>
+    <div class="main">
+
+        <div class="widget">
+            <div class="title">Doel van de Dag</div>
+            <div class="chart">
+
+                <ul>
+                    <li @click="test()">in</li>
+                    <li @click="getUser()">user</li>
+                    <li @click="signOuts()">out</li>
+                </ul>
+
+
+                <div class="alert alert-info">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    Hier kun je jou DvdD aanmaken
+                </div>
+
+                <div class="todo-list">
+
+                    <form @submit:prevent>
+                        <div class="form-group">
+                                <datetime-picker style="z-index:999999;" name="datetime" :model.sync="datetime" placeholder="Date &amp; time" />
+                        </div>
+
+                        <div class="form-group">                           
+
+                            <label style="padding: 2px;" for="addToDo" class="text-muted">Add New</label>
+
+                            <div class="input-group">
+                                <v-select v-model="selectedCode" :options="storyCodes" class="input-sm" style="margin-bottom: 4px;"></v-select>
+                            </div>
+
+                            <div class="input-group">
+
+                                <input @keyup.enter="addNewToDo" v-model="newTODO.title" type="text" class="form-control input-sm" id="addToDo" placeholder="Enter your daily goal">
+                                <span @click="addNewToDo" class="input-group-addon btn" style="padding-left: 35px; color:rgb(8, 163, 86)">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <ul class="list list-group todolist" v-for="(item, index) in todoList" style="padding: 1px;">
+                        <li class="list-group-item" style="padding:0px; margin: 1px;">
+                            <span @click="removeTodo(index, item)" class="text-danger btn removeBtn">&times</span>
+                            <span :class="{'todoDone': item.completed}" style="padding: 5px;" @click="item.completed = !item.completed">
+                                <span style="font-weight: bolder;"> {{ item.sprintCode }}:</span> {{ item.title }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="title">Omgevingen</div>
+            <div class="chart">
+                <div class="alert alert-info">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    Hier kun je een omgeving toevoegen
+                </div>
+
+
+                <div class="todo-list">
+
+                    <form @submit:prevent>
+                        <div class="form-group">
+                            <label style="padding: 2px;" for="addToDo" class="text-muted">Add New</label>
+
+                            <div class="input-group">
+                                <v-select label="name" value='id' v-model="newEnvironment.clientgroup" :options="clients" class="input-sm" style="margin-bottom: 4px;"></v-select>
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <input v-model="newEnvironment.name" type="text" class="form-control input-sm" id="newEnvironment" placeholder="Enter environment details">
+                                <input v-model="newEnvironment.description" type="text" class="form-control input-sm" id="description" placeholder="Description">
+                                <input v-model="newEnvironment.extraDetails" type="text" class="form-control input-sm" id="extraDetails" placeholder="Extra">
+                                <span @click="addEnvironment" class="input-group-addon btn" style="padding-left: 35px; color:rgb(8, 163, 86)">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <ul class="list list-group todolist" v-for="(item, index) in environments" style="padding: 1px;">
+                        <li class="list-group-item" style="padding:0px; margin: 1px;">
+                            <span @click="removeEnvironment(index, item)" class="text-danger btn removeBtn">&times</span>
+                            <span :class="{'done': item.completed}" style="padding: 5px;" @click="item.completed = !item.completed">
+                                <span style="font-weight: bolder;"> {{ item.clientGroup.name }}:</span> {{ item.name }}
+                                <span v-if="item.description != null || item.extraDetails != null " class="alert alert-info" style="font-size: 9.5px;">{{item.description}} - {{item.extraDetails}}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="title">Upcoming events</div>
+            <div class="chart">
+                <div class="alert alert-info">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    Hier kun je een upcoming event toevoegen
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="title">Weather Settings</div>
+            <div class="chart">
+                <div class="alert alert-info">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    Hier kun je een de location van het weer toevoegen
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script src="./dashboard.ts"></script>

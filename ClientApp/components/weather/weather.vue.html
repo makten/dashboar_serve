@@ -1,0 +1,22 @@
+<style src="./weather.css"></style>
+<template>
+
+        <div class="tile weather-date">
+                <div class="time-weather">
+                        <span class="time-weather_weather" style="color: rgb(126, 124, 124); font-size: 40px; font-weight: bolder; clear: left; float: left; margin-left: 30%;">
+                                <span class="time-weather_weather_temperature">{{ weather.temperature }}</span>
+                                <span class="time-weather_weather_description">
+                                        <i class="wi" :class="weather.iconClass"></i>
+                                </span>
+                        </span>
+                        <span class="time-weather_city" style="font-size: 15px; margin-left: 38%; clear: left; float: left;">{{ weatherCity }}</span>
+                        
+                        <div class="time-weather_content" style="margin-left: 33%; font-size: 15px; clear: left; float: left; color:rgb(245, 182, 110);">
+                                <span class="time-weather_date">{{ date }}</span><br>
+                                <span class="time-weather_time" style="font-size: 20px;">{{ time }}</span>
+                        </div>
+                </div>
+        </div>
+</template>
+
+<script src="./weather.ts"></script>

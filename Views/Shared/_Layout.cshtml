@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - HafizTemplate</title>
+
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.3.4/jquery.datetimepicker.min.js"></script>
+        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.3.4/jquery.datetimepicker.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/jquery-ui.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/dist/css/weather-icons.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/dist/css/weather-icons-wind.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    </head>
+    <body>
+
+        @RenderBody()
+
+        
+        <script src="~/dist/vendor.js" asp-append-version="true"></script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

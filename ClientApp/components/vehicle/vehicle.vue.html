@@ -1,0 +1,244 @@
+<template>
+    <div class="main">
+
+
+
+        <div class="widget">
+            <div class="title">Vehicles</div>
+            <div class="chart">
+
+                <tabs>
+                    <tab :name="'Vehicle'" :selected="true">
+                        <h4>Vehicle</h4>
+
+                        <div class="row">
+
+                            <div class="col-md-5">
+
+                                <div class="card card-product">
+                                    <div class="card-image">
+                                        <a href="JavaScript:void(0)">
+                                        <img v-if="photos.length > 0" class="img" :src="'/uploads/' + photos[0].photoName" style="width: 100%;">
+                                        <img v-else class="img" src="../../../wwwroot/img/car.png" style="width: 100%;">
+                                        
+                                    </a>
+                                        <div class="ripple-container"></div>
+                                    </div>
+
+                                    <div class="card-content">
+
+                                        <div class="card-actions">
+
+                                            <button type="button" class="btn btn-default btn-xs">
+                                            <i class="material-icons">art_track</i>
+                                        
+                                        </button>
+                                        <button @click="editVehicle(vehicle)" type="button" class="btn btn-success btn-xs">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+
+                                        <button @click="deleteVehicle(vehicle.id)" type="button" class="btn btn-danger btn-xs">
+                                            <i class="material-icons">close</i>                                        
+                                        </button>
+
+                                        </div>
+
+                                        <h4 class="card-title">
+                                            <a v-if="showDetails" href="JavaScript:void(0)">{{vehicle.make.name}} - {{vehicle.model.name}} </a>
+                                        </h4>
+                                        <div class="row">
+
+                                            <div class="card-features col-md-6">
+                                                <ul v-if="showDetails" class="list-group">
+                                                    <li v-for="feature in vehicle.features" class="list-group-item">
+                                                        <i style="font-size: 14px; font-weight: bolder;" class="material-icons text-success">check</i>                                                        {{ feature.name }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="card-features col-md-6">
+                                                <ul v-if="showDetails" class="list-group">
+                                                    <li class="list-group-item">{{ vehicle.contact.name }} </li>
+                                                    <li class="list-group-item">{{ vehicle.contact.email }} </li>
+                                                    <li class="list-group-item">{{ vehicle.contact.phone }} </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <div class="price">
+                                            <h4>$350000</h4>
+                                        </div>
+                                        <div class="stats pull-right">
+                                            <p class="category"><i class="material-icons">place</i> Zwolle, Netherlands</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </tab>
+
+                    <tab :name="'Photo'">
+
+                        <h4>Photos</h4>                     
+
+                        <div class="form-group">
+                            <input type="file" name="photo" @change="processFile($event)">
+                        </div>
+
+                        <div class="progress" v-if="uploadProgress && uploadProgress < 100">
+                            <div class="progress-bar" :style="{width: uploadProgress +'%'}">
+                                <span class="sr-only">{{ uploadProgress }} % Completed</span>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                       
+                            <div v-for="photo in photos" class="phto col-md-4">
+                                <div class="delete">
+                                    <a class="text-danger" @click.prevent="deletePhoto(photo.id)" style="color: red;">
+                                            &times;
+                                    </a>
+                                </div>
+                                <img :src="'/uploads/'+ photo.photoName" 
+                                class="img-thumbnail vehicle-images"                                
+                                >                                
+                                
+                            </div>
+                       
+                                            
+
+                    </tab>
+
+                </tabs>
+
+            </div>
+
+        </div>
+
+        <modal modalname="modal-fault-details" v-if="openEditModal" @closeModal="openEditModal = false"> 
+            <template slot="title">
+                <h3>Default Title</h3>
+            </template>
+
+<template slot="body">
+                {{ vehicleForm }}
+                <!-- {{ vehicleEdit }} -->
+            </template>
+</modal>
+
+</div>
+</template>
+
+<style>
+    .delete {
+        display: none;
+        position: absolute;
+        left: 25px;
+        top: 10px;
+        font-size: 30px;
+    }
+    
+    .phto:hover .delete {
+        display: block;
+        cursor: pointer;
+    }
+    
+    .card-product {
+        margin-top: 30px;
+    }
+    
+    .card {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        margin: 25px 0;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+        border-radius: 6px;
+        color: rgba(0, 0, 0, 0.87);
+        background: #fff;
+    }
+    
+    .card .card-image {
+        height: 60%;
+        position: relative;
+        overflow: hidden;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-top: -30px;
+        border-radius: 6px;
+        z-index: 3;
+        box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card .card-content {
+        padding: 15px 20px;
+        position: relative;
+    }
+    
+    .card .card-footer {
+        margin: 0 20px 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eeeeee;
+    }
+    
+    .card .card-footer div {
+        display: inline-block;
+    }
+    
+    .card .card-footer .stats {
+        line-height: 22px;
+        color: #999999;
+        font-size: 12px;
+    }
+    
+    .card .card-footer div {
+        display: inline-block;
+    }
+    
+    .pull-right {
+        float: right;
+    }
+    
+    .pull-right {
+        float: right!important;
+    }
+    
+    .card .card-footer .stats .category {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin-bottom: 0;
+    }
+    
+    .card .category:not([class*="text-"]) {
+        color: #999999;
+        font-size: 14px;
+    }
+    
+    .card-product .card-title,
+    .card-product .category,
+    .card-product .card-features {
+        text-align: center;
+    }
+    
+    .card-features {
+        text-align: left !important;
+    }
+    
+    .vehicle-images {
+        height: 200px;
+        overflow: hidden;
+        margin-right: 15px;
+        margin-top: 5px;
+        border-radius: 6px;
+        z-index: 3;
+        box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<script src="./vehicle.ts"></script>

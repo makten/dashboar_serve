@@ -1,0 +1,87 @@
+<template>
+ 
+  <div class="side-nav fixed-left" ref="sidebar" :style="{background: themeColor.color}">
+ 
+  <div class="logo" :style="{background: themeColor.color}" style="filter: brightness(90%);">
+         
+     <router-link to="/" :exact="true">         
+          <span style="color:bisque; padding: 3px;"> <i class="fa fa-tachometer"></i>  {{ logo }} </span>
+    </router-link>
+  </div>
+
+  <nav class="side-list">
+
+    <div class="profile-wrapper">
+      
+      <router-link to="/user/settings" :exact="true" class=""> 
+                    
+          <img v-if="!userProfile.picture" src="../../../wwwroot/img/prof1.jpg" class="user-image" alt="User Image" />
+          <img v-else :src="userProfile.picture" class="user-image" alt="User Image" />
+
+          <p style="color:bisque; padding: 3px; font-weight: bolder;">{{ userProfile.name }}</p>
+      </router-link>
+                
+    </div>
+
+      <ul>    
+
+          <li v-for="item in linkList" class="sidebar-links" :class="{ active: item.active }" @click="changeActive(item.link)" style="color: red !important;"> 
+            
+            <router-link :to="item.link" :exact="true" :style="{color: themeColor.text}">
+            <span v-html="item.icon" :style="{color: themeColor.text}"></span> 
+            <span class="link-text" v-text="item.title"> </span>       
+            </router-link>       
+                    
+        </li> 
+
+        <!-- Show only for admins -->
+        <li v-if="auth.hasRole('Admin')" v-for="adItem in forAdmin" class="sidebar-links" :class="{ active: adItem.active }" @click="changeActive(adItem.link)">
+            <router-link :to="adItem.link" :exact="true">
+                <span v-html="adItem.icon"></span> 
+                <span class="link-text" v-text="adItem.title"> </span>       
+            </router-link>                
+        </li> 
+     
+    </ul>
+
+</nav>
+
+</div>
+
+  
+</template>
+
+<style>
+    .fixed-left {
+        position: fixed;
+        left: 0;
+        height: 100%;
+        overflow-y: auto;
+        z-index: 2000;
+        transition: all 0.4s ease 0s;
+    }
+    
+    ul .sidebar-links {
+        padding: 12px !important;
+        font-size: 20px;
+    }
+    
+    .profile-wrapper {
+        height: 10%;
+        background: #1F60C1;
+        padding-top: 10px;
+        text-align: center;
+    }
+    
+    .user-image {
+        border: 1px solid lightgrey;
+        padding: 1px;
+        margin-right: 7px;
+        height: 55px;
+        width: 55px;
+        border-radius: 50%;
+        background: #E9E8E8;
+    }
+</style>
+
+<script src="./sidebar.ts"></script>

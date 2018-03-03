@@ -1,0 +1,17 @@
+<template>
+
+    <div>
+        <header-component :auth="auth" :authenticated="authenticated" v-if="!fullScreen"></header-component>
+        <sidebar-component v-if="!fullScreen"></sidebar-component>
+
+        <div class="main-content">
+            <div class="content">
+                <router-view :auth="auth" :authenticated="authenticated">
+                </router-view>
+            </div>            
+
+        </div>
+    </div>
+</template>
+
+<script src="./home.ts"></script>

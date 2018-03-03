@@ -1,0 +1,26 @@
+<style src="./member.css"></style>
+
+<template>
+    <div class="team-today">
+        <div class="tile" v-for="member in members">
+            <div class="member-info">
+                <img src="../../../wwwroot/img/prof1.jpg" />
+                <span>
+                    {{ member.firstName }} {{ member.lastName }}
+                </span>
+            </div>
+            <div class="member-todo">
+                <ul class="list-group" v-for="goal in member.goals">
+                    <li class="list-item">
+                        {{ goal.sprintCode }} - {{ goal.title }} <br/>
+                        <span class="peek-text">{{ formatDate(goal.goalStart) }} - {{ formatDate(goal.goalEnd, "DD/MM/YYYY") }}</span>
+                    </li>                   
+                </ul>
+                <center v-show="member.goals.length <= 0">All Cleared</center>
+            </div>
+        </div>        
+
+    </div>
+</template>
+
+<script src="./member.ts"></script>

@@ -1,0 +1,26 @@
+<style src="./client-group.css"></style>
+
+<template>
+    <div class="tile environment">
+        <div class="environment">
+            <div class="environment-title">
+                Omgevingen
+            </div>
+
+            <div v-for="group in clientgroups">
+
+                <span v-show="group.teamEnvironments.length > 0" class="environment-group">({{ group.name }})</span>
+
+                <ul v-for="environment in group.teamEnvironments" class="list-group" style="margin-left: 5px;">
+                    <li class="list-item" style="margin-bottom: 0px;">
+                        {{ environment.name }}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script src="./client-group.ts"></script>
