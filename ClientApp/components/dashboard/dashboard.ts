@@ -12,6 +12,7 @@ import * as moment from 'moment';
 
 import { authConfig, userManagerSettings } from './../../services/auth.config';
 import Oidc from 'oidc-client';
+import CloakAuthService from '../../services/CloakAuthService';
 
 moment.updateLocale('nl', {
     calendar: {
@@ -33,6 +34,9 @@ moment.updateLocale('nl', {
 })
 export default class DashboardComponent extends Vue {
     client: any = new Oidc.OidcClient(authConfig);
+    signinResponse: any;
+    authService: any = new CloakAuthService();
+    
     mng: any = new Oidc.UserManager({
         userStore: new Oidc.WebStorageStateStore({store: window.localStorage}),
         authority: "http://localhost:8080/auth/realms/master",
@@ -79,33 +83,55 @@ export default class DashboardComponent extends Vue {
 
 
 
-    test() {
-        this.mng.signinRedirect().catch(err => { console.log(err) })
+    signin() {
+        var vm = this;
+        this.authService.svc.manager.signinRedirect().then(() => {
+            alert("res")
+           
+        });;
+
+        // this.authService.svc.manager.createSigninRequest().then((user) => {console.log(user)}).catch(error => {console.log("There was an error", error)})
+
+        // this.authService.svc.manager.signinRedirect().then(function (req) {
+        //     // window.location.href = req.url;
+        //     console.log(req);
+
+        // }).catch(function (err) {
+        //     console.log(err);
+        // });
     }
 
     getUser() {
+
+        this.authService.svc.manager.processSigninResponse().then(function (response) {   
+            alert("signin response success" + response);
+        
+            localStorage.setItem('oidc.user:' + userManagerSettings.authority + ':' + userManagerSettings.client_id, JSON.stringify(response));
+        
+        }).catch(function (err) {
+        
+        });
+        
         let self = this
-        this.mng.signinRedirectCallback().then(function (user) {
-            if (user) {
-                console.log("User logged in", user.profile);
-            }
-            else {
-                console.log("User not logged in");
+        this.authService.svc.manager.getUser().then(function (user) {
+
+            if (user == null) {
+                // self.test()
+            } else {
+                self.user = user
+                console.log(self.user)
+                // self.signedIn = true
             }
         }).catch(function (err) {
+            console.log(err)
         });
     }
 
-    signOuts() {
-        var self = this;
-        this.mng.signoutRedirect().then(function (resp) {
-            //   self.signedIn = false
-            console.log("signed out", resp);
-        }).catch(function (err) {
-            console.log(err)
-        })
+    signout() {
+        this.authService.svc.manager.signoutRedirect().catch( (error) =>{
+            console.log("Error signing out", error);
+        });
     }
-
 
 
 

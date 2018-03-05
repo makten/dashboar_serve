@@ -4898,6 +4898,14 @@
       "resolved": "https://registry.npmjs.org/propel/-/propel-3.1.0.tgz",
       "integrity": "sha512-4Obcg74xgN3peAxIQSt33tQTfPNAa+gn0bpzB4Wvon/a+nf7CbwEOH6/x3Xtc09wg9Eh8CW1pz9mfWzsbeonxA=="
     },
+    "propel_windows": {
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/propel_windows/-/propel_windows-3.1.0.tgz",
+      "integrity": "sha512-EkFsXjY+Es02zl5T3mGgrZyuIrCBWr8IHwGhohZTsB56sYWwc6b8vS9tI6pcMi2kjzyZZGcJmfZ/5/bypM4Bew==",
+      "requires": {
+        "propel": "3.1.0"
+      }
+    },
     "proto-list": {
       "version": "1.2.4",
       "resolved": "https://registry.npmjs.org/proto-list/-/proto-list-1.2.4.tgz",
@@ -6014,10 +6022,9 @@
       }
     },
     "vue-class-component": {
-      "version": "5.0.2",
-      "resolved": "https://registry.npmjs.org/vue-class-component/-/vue-class-component-5.0.2.tgz",
-      "integrity": "sha512-wgI/SKRozqADIeMGN16PXiHBa/cnRD7JcuYt7P4JHcMIMc2BdUw02pQ+EQmsui0tN2kRVZGwZ8h4Yb2Vbf4w0w==",
-      "dev": true
+      "version": "6.2.0",
+      "resolved": "https://registry.npmjs.org/vue-class-component/-/vue-class-component-6.2.0.tgz",
+      "integrity": "sha512-U11yVeP5zjPSx4IU7Zas3MLC+Vy9dmufI+uLKLo8YuGQJGOihSYfh/fgNnbjMteN+hz5axjG6iC6ybMo6vGYnA=="
     },
     "vue-hot-reload-api": {
       "version": "2.3.0",
@@ -6066,6 +6073,14 @@
       "requires": {
         "reflect-metadata": "0.1.12",
         "vue-class-component": "5.0.2"
+      },
+      "dependencies": {
+        "vue-class-component": {
+          "version": "5.0.2",
+          "resolved": "https://registry.npmjs.org/vue-class-component/-/vue-class-component-5.0.2.tgz",
+          "integrity": "sha512-wgI/SKRozqADIeMGN16PXiHBa/cnRD7JcuYt7P4JHcMIMc2BdUw02pQ+EQmsui0tN2kRVZGwZ8h4Yb2Vbf4w0w==",
+          "dev": true
+        }
       }
     },
     "vue-router": {

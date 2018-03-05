@@ -1,8 +1,7 @@
 import { authConfig, userManagerSettings } from './../../services/auth.config';
 import { Vue, Component } from 'vue-property-decorator';
 import Oidc from 'oidc-client';
-import { grad, linspace, plot } from "propel";
-
+import CloakAuthService from './../../services/CloakAuthService'
 
 @Component({
     components: {
@@ -17,11 +16,17 @@ export default class AppComponent extends Vue {
     client: any = new Oidc.OidcClient(authConfig);
     mng: any = new Oidc.UserManager(userManagerSettings);
     user: any = null;
+    authService: any = new CloakAuthService();
 
     mounted() {
 
-        // this.signOuts();
-        this.test();
+        // console.log(this.authService);
+        // this.signin();
+        // this.signout();
+        // this.test();
+
+
+        // console.log(x);
         
         // this.signOuts();
         // window.setInterval(() => {
@@ -37,14 +42,26 @@ export default class AppComponent extends Vue {
 
     
 
-    test() {
-        this.signin();
-        // this.mng.signinRedirect().catch(err => { console.log(err) })
+    
+    
+
+    signin() {
+        var vm = this;
+
+        // this.authService.svc.manager.createSigninRequest().then((user) => {console.log(user)}).catch(error => {console.log("There was an error", error)})
+
+        this.authService.svc.manager.signinRedirect().then(function (req) {
+            // window.location.href = req.url;
+            console.log(req);
+
+        }).catch(function (err) {
+            console.log(err);
+        });
     }
 
     getUser() {
         let self = this
-        this.mng.getUser().then(function (user) {
+        this.authService.getUser().then(function (user) {
 
             if (user == null) {
                 // self.test()
@@ -58,40 +75,6 @@ export default class AppComponent extends Vue {
         });
     }
 
-    signOuts() {
-        var self = this;
-        this.mng.signoutRedirect().then(function (resp) {
-            //   self.signedIn = false
-            console.log("signed out", resp);
-        }).catch(function (err) {
-            console.log(err)
-        })
-    }
-
-    signin() {
-        var vm = this;
-
-        this.client.createSigninRequest({ state: { bar: 15 } }).then(function (req) {
-
-            // window.location.href = req.url;
-            vm.client.signinRedirectCallback(req.url).then(function (loggedUser) { 
-                ///// the logged user contains the user info
-                console.log(loggedUser);
-             });
-            
-
-            // if (window.location.href.indexOf("#") >= 0) {
-            //     vm.processSigninResponse();
-            // }
-            // else if (window.location.href.indexOf("?") >= 0) {
-            //     vm.processSignoutResponse();
-            // }
-
-        }).catch(function (err) {
-            console.log(err);
-        });
-    }
-
     signout() {
         var vm = this;
         this.client.createSignoutRequest({ id_token_hint: this.signinResponse && this.signinResponse.id_token, state: { foo: 5 } }).then(function (req) {
@@ -99,22 +82,5 @@ export default class AppComponent extends Vue {
         });
     }
 
-    processSigninResponse() {
-        this.client.processSigninResponse().then(function (response) {
-            this.signinResponse = response;
-            console.log("signin response", this.signinResponse);
-        }).catch(function (err) {
-            console.log(err);
-        });
-    }
-
-    processSignoutResponse() {
-        var vm = this;
-        this.client.processSignoutResponse().then(function (response) {
-            vm.signinResponse = null;
-        }).catch(function (err) {
-            console.log(err);
-        });
-    }
-
+   
 }

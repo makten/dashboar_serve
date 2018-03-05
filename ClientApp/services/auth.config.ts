@@ -14,18 +14,20 @@ export const authConfig: OidcClientSettings = {
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
-    scope: 'openid profile email',
+    scope: 'openid profile email api',
     response_type: 'id_token token',
 
 }
 
-export const userManagerSettings = {
-    userStore: new Oidc.WebStorageStateStore({store: window.localStorage}),
+
+export const userManagerSettings: UserManagerSettings = {
+    userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
     authority: 'http://localhost:8080/auth/realms/master',
     client_id: 'team-dashboard',
     redirect_uri: 'http://localhost:9000',
     response_type: 'id_token token',
-    scope: 'openid profile all_claims',
+    scope: 'openid profile email api1 api2.read_only',
     post_logout_redirect_uri: 'http://localhost:9000',
-    loadUserInfo: false
+    filterProtocolClaims: false,
+    loadUserInfo: true
 }
