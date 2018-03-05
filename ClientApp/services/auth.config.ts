@@ -28,6 +28,6 @@ export const userManagerSettings: UserManagerSettings = {
     response_type: 'id_token token',
     scope: 'openid profile email api1 api2.read_only',
     post_logout_redirect_uri: 'http://localhost:9000',
-    filterProtocolClaims: false,
+    filterProtocolClaims: true,
     loadUserInfo: true
 }
